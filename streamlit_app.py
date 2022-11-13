@@ -2,6 +2,7 @@ import streamlit
 import pandas
 import requests
 import snowflake.connector
+from urllib.error import URLError
 
 streamlit.title('My Parents New Healthy Diner')
 
@@ -28,13 +29,13 @@ streamlit.header("Fruityvice Fruit Advice!")
 fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
 streamlit.write('The user entered ', fruit_choice)
 
-
 fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
 # removed: streamlit.text(fruityvice_response.json())
 
 # create a variable containing a Pandas table with the api-imported dataframe
 fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
 # show the table in the Streamlit app
+streamlit.stop()
 streamlit.dataframe(fruityvice_normalized)
 
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
