@@ -35,8 +35,8 @@ fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_c
 # create a variable containing a Pandas table with the api-imported dataframe
 fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
 # show the table in the Streamlit app
-streamlit.stop()
 streamlit.dataframe(fruityvice_normalized)
+streamlit.stop()
 
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 my_cur = my_cnx.cursor()
